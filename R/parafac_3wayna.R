@@ -57,6 +57,18 @@ parafac_3wayna <-
     vtol <- sseold <- xcx + ctol
     iter <- 0
     cflag <- NA
+    
+    ### linesearch init
+    
+    Amat1 <- Amat
+    Bmat1 <- Bmat
+    Cmat1 <- Cmat
+    Amat2 <- Amat
+    Bmat2 <- Bmat
+    Cmat2 <- Cmat
+    SSEold <- 0
+    OLD<-list(Amat1,Bmat1,Cmat1,Amat2,Bmat2,Cmat2,SSEold)
+    
     while((vtol > ctol) && (iter < maxit)) {
       
       # Step 1: update mode A weights
@@ -91,6 +103,12 @@ parafac_3wayna <-
                        backfit = backfit, mode.range = Cmodes))
         if(any(colSums(abs(Cmat)) <= xtol[3])) cflag <- 2
       }
+      # Step 3.5: linesearch
+      OLD <- linesearch(OLD,Xa,Amat,Bmat,Cmat,iter)
+      
+      Amat<-OLD$Amat1
+      Bmat<-OLD$Bmat1
+      Cmat<-OLD$Cmat1
       
       # Step 4: check for convergence
       for(u in 1:nfac) CkrB[,u] <- kronecker(Cmat[,u], Bmat[,u])
