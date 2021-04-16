@@ -66,8 +66,7 @@ parafac_3wayna <-
     Amat2 <- Amat
     Bmat2 <- Bmat
     Cmat2 <- Cmat
-    SSEold <- 0
-    OLD<-list(Amat1,Bmat1,Cmat1,Amat2,Bmat2,Cmat2,SSEold=SSEold)
+    OLD<-list(Amat1=Amat1,Bmat1=Bmat1,Cmat1=Cmat1,Amat2=Amat2,Bmat2=Bmat2,Cmat2=Cmat2,k=1)
     
     while((vtol > ctol) && (iter < maxit)) {
       
@@ -197,7 +196,7 @@ parafac_3wayna <-
     struc <- c(ifelse(is.null(Astruc), FALSE, TRUE), ifelse(is.null(Bstruc), FALSE, TRUE), ifelse(is.null(Cstruc), FALSE, TRUE))
     pfac <- list(A = Amat, B = Bmat, C = Cmat, SSE = ssenew, Rsq = Rsq, 
                  GCV = GCV, edf = edf, iter = iter, cflag = cflag, 
-                 const = const, control = control, fixed = fixed, struc = struc)
+                 const = const, control = control, fixed = fixed, struc = struc,linesearch=OLD)
     return(pfac)
     
   }
