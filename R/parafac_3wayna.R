@@ -5,7 +5,7 @@ parafac_3wayna <-
            Astart = NULL, Bstart = NULL, Cstart = NULL, 
            Astruc = NULL, Bstruc = NULL, Cstruc = NULL,
            Amodes = NULL, Bmodes = NULL, Cmodes = NULL,
-           backfit = FALSE){
+           backfit = FALSE,usels = FALSE){
     # 3-way Parallel Factor Analysis (Parafac)
     # Nathaniel E. Helwig (helwig@umn.edu)
     # last updated: May 26, 2018
@@ -67,7 +67,7 @@ parafac_3wayna <-
     Bmat2 <- Bmat
     Cmat2 <- Cmat
     SSEold <- 0
-    OLD<-list(Amat1,Bmat1,Cmat1,Amat2,Bmat2,Cmat2,SSEold)
+    OLD<-list(Amat1,Bmat1,Cmat1,Amat2,Bmat2,Cmat2,SSEold=SSEold)
     
     while((vtol > ctol) && (iter < maxit)) {
       
@@ -104,11 +104,14 @@ parafac_3wayna <-
         if(any(colSums(abs(Cmat)) <= xtol[3])) cflag <- 2
       }
       # Step 3.5: linesearch
-      OLD <- linesearch(OLD,Xa,Amat,Bmat,Cmat,iter)
+      if(usels){
+        OLD <- linesearch(OLD,Xa,CkrB,Amat,Bmat,Cmat,nfac,iter)
       
-      Amat<-OLD$Amat1
-      Bmat<-OLD$Bmat1
-      Cmat<-OLD$Cmat1
+        Amat<-OLD$Amat1
+        Bmat<-OLD$Bmat1
+        Cmat<-OLD$Cmat1
+      }
+     
       
       # Step 4: check for convergence
       for(u in 1:nfac) CkrB[,u] <- kronecker(Cmat[,u], Bmat[,u])
