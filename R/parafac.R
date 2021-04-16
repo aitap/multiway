@@ -5,7 +5,7 @@ parafac <-
            Astruc = NULL, Bstruc = NULL, Cstruc = NULL, Dstruc = NULL,
            Amodes = NULL, Bmodes = NULL, Cmodes = NULL, Dmodes = NULL,
            maxit = 500, ctol = 1e-4, parallel = FALSE, cl = NULL, 
-           output = c("best", "all"), verbose = TRUE, backfit = FALSE,usels = FALSE){
+           output = c("best", "all"), verbose = TRUE, backfit = FALSE,linesearch = NULL){
     # 3-way or 4-way Parallel Factor Analysis (Parafac)
     # via alternating least squares (ALS) with optional constraints
     # Nathaniel E. Helwig (helwig@umn.edu)
@@ -181,7 +181,7 @@ parafac <-
                                 Astart = Astart, Bstart = Bstart, Cstart = Cstart,
                                 Astruc = Astruc, Bstruc = Bstruc, Cstruc = Cstruc,
                                 Amodes = Amodes, Bmodes = Bmodes, Cmodes = Cmodes,
-                                backfit = backfit)
+                                backfit = backfit, linesearch = linesearch)
         } else {
           pfaclist <- parLapply(cl = cl, X = nstartlist, fun = "parafac_3way",
                                 data = X, xcx = xcx, const = const,
@@ -204,7 +204,7 @@ parafac <-
                                    Astart = Astart, Bstart = Bstart, Cstart = Cstart,
                                    Astruc = Astruc, Bstruc = Bstruc, Cstruc = Cstruc,
                                    Amodes = Amodes, Bmodes = Bmodes, Cmodes = Cmodes,
-                                   backfit = backfit)
+                                   backfit = backfit, linesearch = linesearch)
             if(verbose) setTxtProgressBar(pbar, 1)
             if(nstart > 1L){
               for(j in 2:nstart){
@@ -214,7 +214,7 @@ parafac <-
                                        Astart = Astart, Bstart = Bstart, Cstart = Cstart,
                                        Astruc = Astruc, Bstruc = Bstruc, Cstruc = Cstruc,
                                        Amodes = Amodes, Bmodes = Bmodes, Cmodes = Cmodes,
-                                       backfit = backfit)
+                                       backfit = backfit, linesearch = linesearch)
                 if(pnew$SSE < pfac$SSE) pfac <- pnew
                 if(verbose) setTxtProgressBar(pbar, j)
               } # end for(j in 2:nstart)
@@ -254,7 +254,7 @@ parafac <-
                                               Astart = Astart, Bstart = Bstart, Cstart = Cstart,
                                               Astruc = Astruc, Bstruc = Bstruc, Cstruc = Cstruc,
                                               Amodes = Amodes, Bmodes = Bmodes, Cmodes = Cmodes,
-                                              backfit = backfit)
+                                              backfit = backfit, linesearch = linesearch)
               if(verbose) setTxtProgressBar(pbar, j)
             }
           } else {

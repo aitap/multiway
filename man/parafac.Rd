@@ -13,7 +13,8 @@ parafac(X, nfac, nstart = 10, const = NULL, control = NULL,
         Astruc = NULL, Bstruc = NULL, Cstruc = NULL, Dstruc = NULL,
         Amodes = NULL, Bmodes = NULL, Cmodes = NULL, Dmodes = NULL,
         maxit = 500, ctol = 1e-4, parallel = FALSE, cl = NULL,
-        output = c("best", "all"), verbose = TRUE, backfit = FALSE)
+        output = c("best", "all"), verbose = TRUE, backfit = FALSE,
+        linesearch = NULL)
 }
 \arguments{
   \item{X}{
@@ -99,6 +100,9 @@ parafac(X, nfac, nstart = 10, const = NULL, control = NULL,
 }
   \item{backfit}{
   Should backfitting algorithm be used for \code{\link{cmls}}?
+}
+  \item{linesearch}{
+  Should line-search acceleration be used? TBD, only works for 3-way PARAFAC with missing data for now.
 }
 }
 
