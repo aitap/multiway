@@ -5,7 +5,7 @@ parafac_3wayna <-
            Astart = NULL, Bstart = NULL, Cstart = NULL, 
            Astruc = NULL, Bstruc = NULL, Cstruc = NULL,
            Amodes = NULL, Bmodes = NULL, Cmodes = NULL,
-           backfit = FALSE,usels = FALSE){
+           backfit = FALSE,linesearch = NULL){
     # 3-way Parallel Factor Analysis (Parafac)
     # Nathaniel E. Helwig (helwig@umn.edu)
     # last updated: May 26, 2018
@@ -66,7 +66,7 @@ parafac_3wayna <-
     Amat2 <- Amat
     Bmat2 <- Bmat
     Cmat2 <- Cmat
-    OLD<-list(Amat1=Amat1,Bmat1=Bmat1,Cmat1=Cmat1,Amat2=Amat2,Bmat2=Bmat2,Cmat2=Cmat2,k=1)
+    OLD<-list(Amat1=Amat1,Bmat1=Bmat1,Cmat1=Cmat1,Amat2=Amat2,Bmat2=Bmat2,Cmat2=Cmat2,k=3)
     
     while((vtol > ctol) && (iter < maxit)) {
       
@@ -103,8 +103,8 @@ parafac_3wayna <-
         if(any(colSums(abs(Cmat)) <= xtol[3])) cflag <- 2
       }
       # Step 3.5: linesearch
-      if(usels){
-        OLD <- linesearch(OLD,Xa,CkrB,Amat,Bmat,Cmat,nfac,iter)
+      if(!is.null(linesearch)){
+        OLD <- linesearch(OLD,data,Xa,CkrB,Amat,Bmat,Cmat,nfac,iter)
       
         Amat<-OLD$Amat1
         Bmat<-OLD$Bmat1

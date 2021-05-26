@@ -5,7 +5,7 @@ parafac <-
            Astruc = NULL, Bstruc = NULL, Cstruc = NULL, Dstruc = NULL,
            Amodes = NULL, Bmodes = NULL, Cmodes = NULL, Dmodes = NULL,
            maxit = 500, ctol = 1e-4, parallel = FALSE, cl = NULL, 
-           output = c("best", "all"), verbose = TRUE, backfit = FALSE){
+           output = c("best", "all"), verbose = TRUE, backfit = FALSE,usels = FALSE){
     # 3-way or 4-way Parallel Factor Analysis (Parafac)
     # via alternating least squares (ALS) with optional constraints
     # Nathaniel E. Helwig (helwig@umn.edu)
