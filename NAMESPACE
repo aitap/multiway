@@ -43,5 +43,5 @@ S3method(resign, parafac2)
 S3method(resign, sca)
 S3method(resign, tucker)
 
-importFrom("stats", "cor", "dbeta", "promax", "quantile", "reorder", "rnorm", "runif", "varimax")
+importFrom("stats", "cor", "dbeta", "optimise", "promax", "quantile", "reorder", "rnorm", "runif", "varimax")
 importFrom("utils", "txtProgressBar", "setTxtProgressBar")
